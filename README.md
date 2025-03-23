@@ -8,5 +8,4 @@ Contributors:
 In this project, we aim to implement **Quantum PCA** using `qiskit`. We then use both classical and quantum PCA to analyse the MNIST handwritten digit dataset.
 
 It contains the following files and folders:
-- to be updated
-
+- **Example file**: example file description.
