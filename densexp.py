@@ -31,14 +31,13 @@ def densitymatrixexp(t=1.0, steps=10, rho_copies=3, sigma=None, rho=None):
     Returns:
         QuantumCircuit: The constructed circuit simulating e^{-iρt}σe^{iρt}.
     """
-
     
     # Small time step per Trotterized evolution
     delta_t = t / steps
 
     # Determine the number of qubits for sigma and rho
-    sigma_qubits = int(np.log2(len(sigma))) if isinstance(sigma, Statevector) else 1
-    rho_qubits = int(np.log2(len(rho))) if isinstance(rho, Statevector) else 1
+    sigma_qubits = int(np.log2(len(sigma)))
+    rho_qubits = int(np.log2(len(rho)))
 
     total_qubits = sigma_qubits + rho_copies * rho_qubits
     qr = QuantumRegister(total_qubits)
@@ -48,12 +47,6 @@ def densitymatrixexp(t=1.0, steps=10, rho_copies=3, sigma=None, rho=None):
     # STEP 1: Initialize sigma
     if isinstance(sigma, Statevector):
         qc.initialize(sigma.data, qr[0:sigma_qubits])
-    #elif isinstance(sigma, QuantumCircuit):
-    #    sv = Statevector.from_instruction(sigma)
-    #    sigma_qubits = int(np.log2(len(sv)))
-    #    qc.initialize(sv.data, qr[0:sigma_qubits])
-    elif sigma is None:
-        pass
     else:
         raise ValueError("sigma must be Statevector")
 
@@ -63,11 +56,6 @@ def densitymatrixexp(t=1.0, steps=10, rho_copies=3, sigma=None, rho=None):
         q_end = q_start + rho_qubits
         if isinstance(rho, Statevector):
             qc.initialize(rho.data, qr[q_start:q_end])
-        #elif isinstance(rho, QuantumCircuit):
-        #    sv = Statevector.from_instruction(rho)
-        #    qc.compose(rho, qubits=qr[q_start:q_end], inplace=True)
-        elif rho is None:
-            pass
         else:
             raise ValueError("rho must be Statevector")
 
@@ -77,7 +65,6 @@ def densitymatrixexp(t=1.0, steps=10, rho_copies=3, sigma=None, rho=None):
             sigma_idx = list(range(0, sigma_qubits))
             rho_idx = list(range(sigma_qubits + i * rho_qubits,
                                  sigma_qubits + (i + 1) * rho_qubits))
-
             for s, r in zip(sigma_idx, rho_idx):
                 block = swap_exp(delta_t)
                 block.qregs = []
