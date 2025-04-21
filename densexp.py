@@ -1,5 +1,5 @@
 from qiskit import QuantumCircuit, QuantumRegister
-from qiskit.circuit.library import RXXGate, RYYGate, RZZGate, StatePreparation
+from qiskit.circuit.library import RXXGate, RYYGate, RZZGate, StatePreparation, UnitaryGate
 from qiskit.quantum_info import Statevector, partial_trace, DensityMatrix
 import numpy as np
 import matplotlib.pyplot as plt
@@ -102,6 +102,62 @@ def ptr1(qc, sigma=None): #not sure we will be needing this bad boy
     reduced_dm = partial_trace(full_sv, trace_out_indices)
 
     return reduced_dm
+
+
+def densitymatrixexp_unitary(t=1.0, steps=10, rho_copies=3, sigma=None, rho=None):
+    """
+    Returns a UnitaryGate representing the evolution e^{-iρt}σe^{iρt}
+    via Trotterized SWAP exponentials using multiple copies of ρ.
+
+    Args:
+        t (float): Total evolution time.
+        steps (int): Number of Trotter steps.
+        rho_copies (int): Number of copies of the density matrix ρ.
+        sigma (Statevector): Initial state for σ (target system).
+        rho (Statevector): State representing ρ (used in copies).
+    Returns:
+        UnitaryGate: The unitary gate representing the evolution e^{-iρt}σe^{iρt}.
+    """
+    delta_t = t / steps
+
+    sigma_qubits = int(np.log2(len(sigma)))
+    rho_qubits = int(np.log2(len(rho)))
+    total_qubits = sigma_qubits + rho_copies * rho_qubits
+
+    qr = QuantumRegister(total_qubits)
+    qc = QuantumCircuit(qr)
+
+    # STEP 1: Initialize sigma
+    if isinstance(sigma, Statevector):
+        qc.initialize(sigma.data, qr[0:sigma_qubits])
+    else:
+        raise ValueError("sigma must be a Statevector")
+
+    # STEP 2: Initialize rho copies
+    for i in range(rho_copies):
+        start = sigma_qubits + i * rho_qubits
+        end = start + rho_qubits
+        if isinstance(rho, Statevector):
+            qc.initialize(rho.data, qr[start:end])
+        else:
+            raise ValueError("rho must be a Statevector")
+
+    # STEP 3: Apply SWAP exponentials
+    for _ in range(steps):
+        for i in range(rho_copies):
+            sigma_idx = list(range(0, sigma_qubits))
+            rho_idx = list(range(sigma_qubits + i * rho_qubits,
+                                 sigma_qubits + (i + 1) * rho_qubits))
+            for s, r in zip(sigma_idx, rho_idx):
+                block = swap_exp(delta_t)
+                block.qregs = []
+                qc.append(block.to_instruction(), [s, r])
+
+    # Convert to UnitaryGate
+    unitary = Statevector.from_instruction(qc).to_operator()
+    return UnitaryGate(unitary, label="e^{-iρt}")
+
+
 
 sigma1 = Statevector.from_label('00')
 
