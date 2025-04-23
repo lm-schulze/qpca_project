@@ -308,9 +308,12 @@ def eigen_construction(probabilities, sign_dict, resolution, n_qubits, peak_thre
     lambda_keys = sorted(lambdas_dict, key=lambda x: int(x[::-1], 2))
     lambda_probs = np.array([lambdas_dict[k] for k in lambda_keys])
     
+    # pad with zeros at start and end for peak finding
+    padded_probs = np.concatenate(([0.0], lambda_probs, [0.0]))
+    
     # Find peaks
-    peaks_idx, _ = find_peaks(lambda_probs, threshold=peak_threshold) # TODO: investigate threshold more?
-    peak_lambda_keys = [lambda_keys[i] for i in peaks_idx]
+    peaks_idx, _ = find_peaks(padded_probs, threshold=peak_threshold) # TODO: investigate threshold more?
+    peak_lambda_keys = [lambda_keys[i-1] for i in peaks_idx]
 
     if verbose: 
         print("found peaks: ", peaks_idx, peak_lambda_keys) 
