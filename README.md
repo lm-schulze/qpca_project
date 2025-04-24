@@ -14,6 +14,6 @@ It contains the following files and folders:
 - **qPCA_attempt.ipynb**: An attempt to integrate the density matrix exponentiation from dens_exp.py into the qPCA implementation from qPCA_clean.ipynb. Currently not functional.
 - **qPCA_funcs.py**: Collection of helper functions from qPCA_clean.ipynb to be used in the MNIST application.
 - **MNIST_qPCA.ipynb**: Notebook trying to apply qPCA to the MNIST handwritten digits dataset. WIP.
-- **cov_matr_preparation.ipynb**: Attempt to implement the Data Loading via ensemble average density matrix, as suggested [here]((https://doi.org/10.1103/PRXQuantum.3.030334)). WIP.
+- **cov_matr_preparation.ipynb**: Attempt to implement the Data Loading via ensemble average density matrix, as suggested [here](https://doi.org/10.1103/PRXQuantum.3.030334). WIP.
 
 
