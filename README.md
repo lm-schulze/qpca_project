@@ -14,5 +14,6 @@ It contains the following files and folders:
 - **qPCA_attempt.ipynb**: An attempt to integrate the density matrix exponentiation from dens_exp.py into the qPCA implementation from qPCA_clean.ipynb. Currently not functional.
 - **qPCA_funcs.py**: Collection of helper functions from qPCA_clean.ipynb to be used in the MNIST application.
 - **MNIST_qPCA.ipynb**: Notebook containing the application of classical PCA and qPCA on the MNIST handwritten digits dataset.
-
+- **DME_poc.ipynb**: Notebook containing the proof of concept of the density matrix exponentiation through simulation on denisty matrices.
+- **qPCA_plots.ipynb**: Notebook for comparing accuracy for different resolutions and with some circuit details.
 
