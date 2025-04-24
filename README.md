@@ -13,7 +13,8 @@ It contains the following files and folders:
 - **dens_exp.py**: Contains helper functions to construct the unitary operator for the qPCA Phase estimation using the Swap gate method described in [this paper](https://doi.org/10.1038/nphys3029).
 - **qPCA_attempt.ipynb**: An attempt to integrate the density matrix exponentiation from dens_exp.py into the qPCA implementation from qPCA_clean.ipynb. Currently not functional.
 - **qPCA_funcs.py**: Collection of helper functions from qPCA_clean.ipynb to be used in the MNIST application.
-- **MNIST_qPCA.ipynb**: Notebook containing the application of classical PCA and qPCA on the MNIST handwritten digits dataset.
+- **MNIST_qPCA.ipynb**: Notebook trying to apply qPCA to the MNIST handwritten digits dataset. WIP.
+- **cov_matr_preparation.ipynb**: Attempt to implement the Data Loading via ensemble average density matrix, as suggested [here](https://doi.org/10.1103/PRXQuantum.3.030334). WIP.
 - **DME_poc.ipynb**: Notebook containing the proof of concept of the density matrix exponentiation through simulation on denisty matrices.
 - **qPCA_plots.ipynb**: Notebook for comparing accuracy for different resolutions and with some circuit details.
 
