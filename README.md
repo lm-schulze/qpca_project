@@ -8,6 +8,7 @@ Contributors:
 In this project, we aim to implement **Quantum PCA** using `qiskit`. We then use both classical and quantum PCA to analyse the MNIST handwritten digit dataset.
 
 It contains the following files and folders:
+
 Currently functional:
 - **qiskit_playground.ipynb**: Jupyter Notebook used to familiarize ourselves with qiskit and understand the different steps of qPCA. Inspired by [this paper](https://doi.org/10.1109/QCE57702.2023.10175) and the [corresponding github repository](https://github.com/Eagle-quantum/QuPCA).
 - **qPCA_clean.ipynb**: Notebook containing the proper implementations of the different functions for qPCA. Used to adjust different parameters and play around with different test matrices.
